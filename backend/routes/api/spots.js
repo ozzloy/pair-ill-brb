@@ -417,8 +417,13 @@ router.get("/:spotId", async (req, res) => {
   }
 
   const spotJson = spot.toJSON();
+
+  const previewImage = spotJson.SpotImages.find(
+    (image) => image.id === spotJson.previewImage
+  );
+
   spotJson.SpotImages.forEach((element) => {
-    element.preview = element.id === spotJson.id;
+    element.preview = element.id === previewImage?.id;
   });
   return res.status(200).json(spotJson);
 });
